@@ -1,0 +1,146 @@
+
+\ifnum\me=0
+%\handout{PS\num}{\today}{Name: **** INSERT YOU NAME HERE ****}{Due:
+%\due}{Solutions to Problem Set \num}
+%
+%I collaborated with *********** INSERT COLLABORATORS HERE (INDICATING
+%SPECIFIC PROBLEMS) *************.
+\fi
+\ifnum\me=1
+\handout{PS\num}{\today}{Name: Yevgeniy Dodis}{Due: \due}{Solution
+{\em Sketches} to Problem Set \num}
+\fi
+\ifnum\me=2
+\handout{PS\num}{\today}{Lecturer: Yevgeniy Dodis}{Due: \due}{Problem
+Set \num}
+\fi
+
+\newproblem{Sorting in $O(n \log \log n)$ time}{10 points}
+
+\begin{itemize}
+\item[(a)] (4 points) Suppose we want to sort an array $A$ of $n$
+  elements from the set $\{1, 2, \ldots, (\log n)^{\log n}\}$.
+  Show how to sort this array in time $O(n \log \log n)$.
+
+\ifnum\me<2
+\begin{solution}
+***************** INSERT PROBLEM \prob a SOLUTION HERE ***************
+\end{solution}
+\fi
+
+\item[(b)] (6 points) Suppose we want to sort an array $A$ of $n$
+  integers such that the total number of distinct integers in $A$ is
+  $O(\log n)$. Show how to sort this array in time $O(n \log \log n)$.
+
+\ifnum\me<2
+\begin{solution}
+***************** INSERT PROBLEM \prob b SOLUTION HERE ***************
+\end{solution}
+\fi
+
+\end{itemize}
+
+\newproblem{$k$-Sorting an Array}{6 points}
+
+An $n$-element $A = \{a_1, a_2, \ldots, a_n\}$ array is said to be
+{\em $k$-sorted} if the first $k$ elements are each less than each of
+the next $k$ elements, which in turn are less than the next $k$
+elements, and so on.  More precisely, $$a_{(i-1)k + j} \leq a_{ik +
+  \ell} \text{ for all }1\leq i < n/k, \;\; 1 \leq j, \ell \leq k\;.$$
+
+Assume you are a given any (e.g., completely unsorted) array $A$, and
+only wish to $k$-sort $A$, meaning that you only wish to rearrange the
+element of $A$ so that they become $k$-sorted, as defined above.
+Notice, there are many possible valid answers for any given $A$, and
+the algorithm is allowed to choose any one of such answers.
+
+Assuming $n$ is a multiple of $k$, show that any valid,
+comparison-based $k$-sorting algorithm for $A$ requires $\Omega(n \log
+{(n/k)})$ comparisons. \hint{You may either do this directly using a
+  decision tree argument (this will require using Stirling's
+  approximation), or you can have a sleeker indirect argument using
+  the lower/upper bound for sorting.}
+
+\ifnum\me<2
+\begin{solution}
+***************** INSERT PROBLEM \prob~ SOLUTION HERE ***************
+\end{solution}
+\fi
+
+\newproblem{$k$-th Smallest Element from Two Lists}{6 points}
+
+Suppose you are given two sorted lists $A, B$ of size $n$ and $m$,
+respectively. Give an $O(\log k)$ algorithm to find the $k$-th
+smallest element in $A \cup B$, where $k \leq \min(m,n)$.
+
+\ifnum\me<2
+\begin{solution}
+***************** INSERT PROBLEM \prob~ SOLUTION HERE ***************
+\end{solution}
+\fi
+
+\newproblem{Finding the most frequent element} {4 (\textbf{+4}) points}
+
+\begin{itemize}
+
+\item[(a)] (4 points) Given an array $A$ of size $n$ and the fact that
+  there is an element $x$ that occurs at least $1 + \lfloor n/2
+  \rfloor$ times in $A$, design an $O(n)$ time algorithm to find $x$.
+
+\ifnum\me<2
+\begin{solution}
+***************** INSERT PROBLEM \prob a SOLUTION HERE ***************
+\end{solution}
+\fi
+
+\item[(b)] (4 points (\textbf{Extra credit})) The Criminal
+  Investigation Unit, while investigating a certain crime, found a set
+  of $n$ fingerprints of which they are convinced that more than half
+  (i.e. $1 + \lfloor n/2 \rfloor$) belong to the same criminal, but
+  they are not sure which ones. They hire a fingerprint expert who can
+  compare any two fingerprints manually and tell whether these two are
+  the same or not.  However, if he has to compare all $n(n-1)/2$ pairs
+  of finger-prints, it will take a lot of time and resources.  Could
+  you help the fingerprint expert find a strategy to find the subset
+  of more than half identical fingerprints, where the number of
+  comparisons is only $O(n)$?  \hint{Notice, there is no ``total
+    order'' on the set of fingerprints, so it does not make sense to
+    say that one fingerprint is ``less'' or ``greater'' than the
+    other. Hence, you probably cannot use the simple solution from
+    part (a).}
+
+\ifnum\me<2
+\begin{solution}
+***************** INSERT PROBLEM \prob b SOLUTION HERE ***************
+\end{solution}
+\fi
+
+\end{itemize}
+
+\newproblem{Constructing Tree from Treewalks}{7 points}
+
+\begin{itemize}
+
+\item[(a)] (5 points) Design an algorithm that takes as input an {\sc
+    Inorder-Tree-Walk} and {\sc Postorder-Tree-Walk} of a binary tree
+  $T$ on $n$ nodes (both as $n$-elements arrays) and outputs the {\sc
+    Preorder-Tree-Walk} of $T$ (again, as $n$-element array). Notice,
+  $T$ is not necessarily a binary {\em search} tree.
+
+\ifnum\me<2
+\begin{solution}
+***************** INSERT PROBLEM \prob a SOLUTION HERE ***************
+\end{solution}
+\fi
+
+\item[(b)] (2 points) Now assume that the tree $T$ is a binary {\em
+    search} tree. Modify your algorithm in part (a) so that it works
+  given only the {\sc Postorder-Tree-Walk} of $T$.
+
+\ifnum\me<2
+\begin{solution}
+***************** INSERT PROBLEM \prob b SOLUTION HERE ***************
+\end{solution}
+\fi
+
+\end{itemize}

@@ -1,0 +1,460 @@
+%me=0 student solutions, me=1 - my solutions, me=2 - assignment
+\def\me{0}
+\def\num{1}  %homework number
+\def\due{Tuesday, September 10}  %due date
+\def\course{CSCI-GA.1170-001/002 Fundamental Algorithms} %course name
+\def\name{Sahil Goel}
+%
+\iffalse
+INSTRUCTIONS: replace # by the homework number.
+(if this is not ps#.tex, use the right file name)
+
+  Clip out the ********* INSERT HERE ********* bits below and insert
+appropriate TeX code.  Once you are done with your file, run
+
+  ``latex ps#.tex''
+
+from a UNIX prompt.  If your LaTeX code is clean, the latex will exit
+back to a prompt.  To see intermediate results, type
+
+  ``xdvi ps#.dvi'' (from UNIX prompt)
+  ``yap ps#.dvi'' (if using MikTex in Windows)
+
+after compilation. Once you are done, run
+
+  ``dvips ps#.dvi''
+
+which should print your file to the nearest printer.  There will be
+residual files called ps#.log, ps#.aux, and ps#.dvi.  All these can be
+deleted, but do not delete ps1.tex. To generate postscript file ps#.ps,
+run
+
+  ``dvips -o ps#.ps ps#.dvi''
+
+I assume you know how to print .ps files (``lpr -Pprinter ps#.ps'')
+\fi
+%
+\documentclass[11pt]{article}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\setlength{\oddsidemargin}{.0in}
+\setlength{\evensidemargin}{.0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+
+\newcommand{\handout}[5]{
+   \renewcommand{\thepage}{#1, Page \arabic{page}}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{
+    \hbox to 5.78in { {\bf \course} \hfill #2 }
+       \vspace{4mm}
+       \hbox to 5.78in { {\Large \hfill #5  \hfill} }
+       \vspace{2mm}
+       \hbox to 5.78in { {\it #3 \hfill #4} }
+      }
+   }
+   \end{center}
+   \vspace*{4mm}
+}
+
+\newcounter{pppp}
+\newcommand{\prob}{\arabic{pppp}}  %problem number
+\newcommand{\increase}{\addtocounter{pppp}{1}}  %problem number
+
+%first argument desription, second number of points
+\newcommand{\newproblem}[2]{
+\ifnum\me=0
+\ifnum\prob>0 \newpage \fi
+\increase
+\setcounter{page}{1}
+\handout{\name, Homework \num, Problem \arabic{pppp}}{\today}{Name: \name}{Due:
+\due}{Solutions to Problem \prob\ of Homework \num\ (#2)}
+\else
+\increase
+\section*{Problem \num-\prob~(#1) \hfill {#2}}
+\fi
+}
+
+%\newcommand{\newproblem}[2]{\increase
+%\section*{Problem \num-\prob~(#1) \hfill {#2}}
+%}
+
+\def\squarebox#1{\hbox to #1{\hfill\vbox to #1{\vfill}}}
+\def\qed{\hspace*{\fill}
+        \vbox{\hrule\hbox{\vrule\squarebox{.667em}\vrule}\hrule}}
+\newenvironment{solution}{\begin{trivlist}\item[]{\bf Solution:}}
+                      {\qed \end{trivlist}}
+\newenvironment{solsketch}{\begin{trivlist}\item[]{\bf Solution Sketch:}}
+                      {\qed \end{trivlist}}
+\newenvironment{code}{\begin{tabbing}
+12345\=12345\=12345\=12345\=12345\=12345\=12345\=12345\= \kill }
+{\end{tabbing}}
+
+\newcommand{\eqref}[1]{Equation~(\ref{eq:#1})}
+
+\newcommand{\hint}[1]{({\bf Hint}: {#1})}
+%Put more macros here, as needed.
+\newcommand{\room}{\medskip\ni}
+\newcommand{\brak}[1]{\langle #1 \rangle}
+\newcommand{\bit}[1]{\{0,1\}^{#1}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\C}{{\cal C}}
+
+\newcommand{\nin}{\not\in}
+\newcommand{\set}[1]{\{#1\}}
+\renewcommand{\ni}{\noindent}
+\renewcommand{\gets}{\leftarrow}
+\renewcommand{\to}{\rightarrow}
+\newcommand{\assign}{:=}
+
+\newcommand{\AND}{\wedge}
+\newcommand{\OR}{\vee}
+
+\newcommand{\For}{\mbox{\bf For }}
+\newcommand{\To}{\mbox{\bf to }}
+\newcommand{\Do}{\mbox{\bf Do }}
+\newcommand{\If}{\mbox{\bf If }}
+\newcommand{\Then}{\mbox{\bf Then }}
+\newcommand{\Else}{\mbox{\bf Else }}
+\newcommand{\While}{\mbox{\bf While }}
+\newcommand{\Repeat}{\mbox{\bf Repeat }}
+\newcommand{\Until}{\mbox{\bf Until }}
+\newcommand{\Return}{\mbox{\bf Return }}
+
+\begin{document}
+
+\ifnum\me=0
+%\handout{PS\num}{\today}{Name: **** INSERT YOU NAME HERE ****}{Due:
+%\due}{Solutions to Problem Set \num}
+%
+%I collaborated with *********** INSERT COLLABORATORS HERE (INDICATING
+%SPECIFIC PROBLEMS) *************.
+\fi
+\ifnum\me=1
+\handout{PS\num}{\today}{Name: Yevgeniy Dodis}{Due: \due}{Solution
+{\em Sketches} to Problem Set \num}
+\fi
+\ifnum\me=2
+\handout{PS\num}{\today}{Lecturer: Yevgeniy Dodis}{Due: \due}{Problem
+Set \num}
+\fi
+
+
+\newproblem{Polynomial Evaluation}{16 (+4) points}
+
+A degree-$n$ polynomial $P(x)$ is a function
+$$P(x) = a_0 + a_1x + \ldots + a_{n-1}x^{n-1} + a_n x^n = \sum_{i=0}^n a_i
+x^i$$
+
+\begin{itemize}
+
+\item[(a)] (2 points) Express the value $P(x)$ as
+$$P(x) = a_0 + a_1x + \ldots + a_{n-2} x^{n-2} + b_{n-1} x^{n-1} =
+\sum_{i=0}^{n-1} b_i x^i$$
+where $b_0=a_0,\ldots, b_{n-2} = a_{n-2}$. What is $b_{n-1}$ as a
+function of the $a_i$'s and $x$?
+
+\ifnum\me<2
+\begin{solution}
+
+$$P(x) = a_0 + a_1x + \ldots + a_{n-1}x^{n-1} + a_n x^n = \sum_{i=0}^n a_i
+x^i                      - 1$$
+$$P(x) = a_0 + a_1x + \ldots + a_{n-2} x^{n-2} + b_{n-1} x^{n-1} =
+\sum_{i=0}^{n-1} b_i x^i                   -2 $$
+Equating equations 1 and 2, since $a_0=b_0, a_1=b_1, ...., a_{n-2} = b_{n-2}$
+$$a_{n-1}*x^{n-1} + a_n*x^n = b_{n-1}*x^{n-1}$$
+$$b_{n-1} = a_{n-1} + a_n*x$$
+$$P(x) = b_0 + b_1x + \ldots + b_{n-2} x^{n-2} + b_{n-1} x^{n-1} =
+\sum_{i=0}^{n-1} b_i x^i  $$
+where $a_0=b_0, a_1=b_1, . . ., a_{n-2}=b_{n-2}$ and $b_{n-1}=a_{n-1} + a_n*x$
+
+\end{solution}
+\fi
+
+\item[(b)] (5 points) Using part (a) above write a recursive procedure
+$\mathsf{Eval}(A,n,x)$ to evaluate the polynomial $P(x)$ whose
+coefficients are given in the array $A[0\ldots n]$ (i.e., $A[0]=a_0$,
+etc.). Make sure you do not forget the base case $n=0$.
+
+\ifnum\me<2
+\begin{solution}
+There are 3 solutions to this problem.\\
+1. With base case n=0\\
+2. With base case n=-1\\
+3. With base case n=degree of polynomial (Assumption : if degree of polynomial is accessible inside the function and initially calling the function as eval(A,x,0)). This is the most optimal solution amongst the three\\
+
+1. Base case n=0
+
+Eval(A,x,n)\\
+\{\\
+if(n==0)\\
+return A[0];\\
+return $x^n*A[n]$ + Eval(A,x,n-1);\\
+\}\\
+
+2. Base case n=-1
+
+Eval(A,x,n)\\
+\{\\
+if(n==-1)\\
+return 0;\\
+return $x^n*A[n]$ + Eval(A,x,n-1);\\
+\}\\
+
+3. Base case n=degree of polynomial\\
+    Call from main(), Eval(A,x,0)\\
+    Assumption: Degree of polynomial known inside function\\
+    Horner's Rule using recursion \\
+    
+    Eval(A,x,n)\\
+\{\\
+if(n==DegreeOfPolynomial)\\
+return A[n];\\
+return $A[n] + x*Eval(A,x,n+1);$\\
+\}\\
+
+    
+    
+
+\end{solution}
+\fi
+
+\item[(c)] (3 points) Let $T(n)$ be the running time of your implementation
+of $\mathsf{Eval}$. Write a recurrence equation for $T(n)$ and solve
+it in the $\Theta(\cdot)$ notation.
+
+\ifnum\me<2
+\begin{solution}
+Assuming calculation of $x^n$ takes $O(n)$ times\\
+For the first 2 solutions of 1-(c), the recurrence equation will become\\
+$$ T(1)=c_1$$
+$$ T(n)= T(n-1) + c*n $$
+Solving the above recurrence equation\\
+$$T(n)= T(n-2) + c*(n-1) + c*n$$
+$$T(n)= T(n-3) + c*(n-2) + c*(n-1) + c*n$$
+Solving in the similar manner
+$$T(n)= T(1) + c*(n+ (n-1) + (n-2) + \ldots + 1)$$
+$$T(n)=c1 + c*((n)(n+1)/2)$$
+Therefore $T(n) = O(n^2) $
+
+Now calculating the complexity for horner's rule method (iii) Part\\
+
+$$T(1)=c_1$$
+$$T(n)=  T(n-1) + c$$
+Solving for the recurrence equation above\\
+$$T(n)=  T(n-2) + c+ c$$
+Solving similarly \\
+$$T(n) = n*c $$
+Therefore $T(n)=O(n)$ which is much better than $O(n^2)$
+
+
+
+
+\end{solution}
+\fi
+
+\item[(d)] (6 points) Assuming $n$ is a power of $2$, try to express $P(x)$ as
+$P(x) = P_0(x) + x^{n/2}P_1(x)$, where $P_0(x)$ and $P_1(x)$ are both
+polynomials of degree $n/2$. Assuming the computation of $x^{n/2}$
+takes $O(n)$ times, describe (in words or pseudocode) a recursive
+procedure $\mathsf{Eval}_2$ to compute $P(x)$ using two recursive
+calls to $\mathsf{Eval}_2$. Write a recurrence relation for the
+running time of $\mathsf{Eval}_2$ and solve it. How does your solution
+compare to your solution in part (c)?
+
+\ifnum\me<2
+\begin{solution}
+If n is power of 2 
+$P(x)$ can be split into $P_0(x)$ and $P_1(x)$. For example suppose
+$$P(x) =  a_0 + a_1*x+a_2*x^2+a_3*x^3+a_4*x^4$$  
+It could be divided as 
+$$P(x)=P_0(x) + x^2*P_1(x)$$
+where $P_0(x) =   a_0 + a_1*x+a_2*x^2$ and $P_1(x) = a_3*x + a_4*x^2$
+\\
+Now both the polynomials are 2 degree polynomials and both can be recursively called to evaluate the value of expression\\
+
+Eval2(A,x,l,h)  \hfill    \%Where l is lower bound and h is higher bound \\
+\{\\
+if(l==h)    \\
+      return A[l]; \\
+    return Eval2(A,x,l,((l+h)/2)) + $[x^{(h-l)/2+1}]$*Eval2( A, x, ((l+h)/2)+1 , h);\\
+\}\\
+\\
+Here First call to Eval2 is for first half of polynomial i.e. from 0 to n/2 i.e. (l+h)/2. Second call to Eval2 is for second half of polynomial i.e. from (n/2)+1 i.e. ((l+h)/2 + 1) to h.
+\\
+Recurrence Equation will become:
+$$T(1) = c_1$$
+since calculation of $x^{n/2}$ takes  O(n) time, time consumed in that step is $c_2*n$ \\
+$$T(n)= 2*T(n/2) + c_2*n;$$ 
+By substitution \\
+$$T(n)= 2*(2*T(n/4) + c_2*(n/2))+ c_2*n;$$ 
+$$T(n)=4*T(n/4) + 2*c_2*n$$
+Substituting in similar fashion\\
+$$T(n)=n*T(1) + log(n)*n$$
+$$T(n)=n*c+ log(n)*n$$
+Therefore $T(n)=O(n*log(n))$
+
+\end{solution}
+\fi
+
+\item[(e)] ({\bf Extra Credit.}) Explain how to fix the slow
+``conquer'' step of part (d) so that the resulting solution is as
+efficient as ``expected''.
+
+\ifnum\me<2
+\begin{solution}
+Slow conquer step i.e. calculation of $x^n$ can be fixed by calculating $x^n$ in $log(n)$ time.\\
+Algorithm for the same will be\\
+POW(x,n)\\
+\{
+if(n==0)\\
+return 1;\\
+temp=POW(x,$n/2$);\\
+if(n\%2==0);\\
+return temp*temp;\\
+else\\
+return x*temp*temp;\\
+\}\\
+
+Total complexity of algorithm will become $O(n)$
+\end{solution}
+\fi
+
+\end{itemize}
+
+\newproblem{Asymptotic Comparisons}{10 Points}
+
+For each of the following pairs of functions $f(n)$ and $g(n)$, state
+whether $f$ is $O(g)$; whether $f$ is $o(g)$; whether $f$ is
+$\Theta(g)$; whether $f$ is $\Omega(g)$; and whether $f$ is
+$\omega(g)$.  (More than one of these can be true for a single pair!)
+
+\begin{itemize}
+\item[(a)] $f(n) = 32 n^{21} + 2$; $g(n) = \frac{n^{22}+3n+4}{111} - 52 n$.
+
+\ifnum\me<2
+\begin{solution}
+$f$ is $o(g)$\\
+$f$ is $O(g)$\\
+since $\lim_{n\to\infty}\frac{f(n)}{g(n)}=0$\\
+
+\end{solution}
+\fi
+
+\item[(b)]  $f(n) = \log(n^{21}+3n)$; $g(n) = \log(n^{2}-1)$.
+
+\ifnum\me<2
+\begin{solution}
+$f$ is $\Omega(g)$\\
+$f$ is $O(g)$\\
+$f$ is $\Theta(g)$\\
+
+\end{solution}
+\fi
+
+\item[(c)]  $f(n) = \log (2^{n}+n^2)$; $g(n) = \log(n^{22})$.
+
+\ifnum\me<2
+\begin{solution}
+$f$ is $\omega(g)$\\
+$f$ is $\Omega(g)$\\
+
+\end{solution}
+\fi
+
+\item[(d)] $f(n) = n^{3} \cdot 2^{n}$; $g(n) = n^{2} \cdot 3^{n}$.
+
+\ifnum\me<2
+\begin{solution}
+$f$ is $o(g)$\\
+$f$ is $O(g)$\\
+\end{solution}
+\fi
+
+\item[(e)] $f(n) = (n^{n})^{3}$; $g(n)=n^{(n^{3})}$.
+
+\ifnum\me<2
+\begin{solution}
+$f$ is $o(g)$\\
+$f$ is $O(g)$\\
+
+\end{solution}
+\fi
+
+\end{itemize}
+
+\newproblem{The Same or Not the Same?}{10 points}
+
+The following two functions both take as arguments two $n$-element
+arrays $A$ and $B$:
+
+\begin{code}
+{\sc Magic-1}$(A,B,n)$ \\
+\>  \For $i = 1$ \To $n$\\
+\>\>  \For $j = 1$ \To $n$\\
+\>\>\>  \If $A[i] \ge B[j]$ \Return FALSE\\
+\>  \Return TRUE\\
+\end{code}
+
+\begin{code}
+{\sc Magic-2}$(A,B,n)$ \\
+\>  $temp := A[1]$\\
+\> \For $i = 2$ \To $n$\\
+\>\>  \If $A[i] > temp$ \Then $temp := A[i]$\\
+\> \For $j = 1$ \To $n$\\
+\>\> \If $temp \ge B[j]$ \Return FALSE\\
+\>  \Return TRUE\\
+\end{code}
+
+
+\begin{itemize}
+
+\item[(a)] (2 points) It turns out both of these procedures return
+  TRUE if and only if the same `special condition' regarding the
+    arrays $A$ and $B$ holds. Describe this `special condition' in
+  English.
+
+\ifnum\me<2
+\begin{solution}
+If every value in the array $A$ is smaller than any of the values in array $B$ then the result is TRUE. In other words, if the maximum of array $A$ elements is smaller than the minimum of array $B$ elements, than the result will be true. 
+\end{solution}
+\fi
+
+\item[(b)] (5 points) Analyze the worst-case running time for both
+  algorithms in the $\Theta$-notation. Which algorithm would you
+  chose? Is it the one with the shortest code (number of lines)?
+
+\ifnum\me<2
+\begin{solution}
+In worst case, considering MAGIC-1 code,
+the outer loop will run n times and the inner loop will run n times for every outer loop.\\
+So total number of steps will be $n^2$\\
+Hence the worst case complexity of algorithm is $\Theta(n^2)$
+
+In worst case, considering Magic-2 Code,
+Finding the maximum of array $A$ will take n comparisons i.e. if the element is at the end of array $A$.\\
+In next step worst case will be when maximum of array $A$ is smaller than every element of $B$ except the last element. It will also take n comparisons.
+\\
+Total Complexity will become $\Theta(n)$.\\
+More optimal solution is the second code with more lines of code, so it is not the one with shortest lines of code.\\
+\end{solution}
+\fi
+
+\item[(c)] (3 points) Does the situation change if we consider the
+  best-case running time for both algorithms?
+
+\ifnum\me<2
+\begin{solution}
+Yes the situation changes if we consider the best case running time algorithm for both algorithms because in Magic-1, there will be only one comparison in best case that is when first element of A will be larger than the first element of array B, it will exit and return false.\\
+Whereas in Magic-B, there will be minimum n comparisons to find out the maximum of array $A$.\\
+Therefore, Magic-1 best case running time is better than Magic-2 best case running time.
+
+\end{solution}
+\fi
+
+\end{itemize}
+
+\end{document}
